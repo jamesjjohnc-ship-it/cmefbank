@@ -182,7 +182,7 @@ export default function SettingsPage({
       if (typeof window !== "undefined") {
         const identifier = localStorage.getItem("identifier");
         if (identifier) {
-          await updateUserByEmail(identifier, {
+          await updateUserByEmail(identifier.toLowerCase(), {
             profileImageUrl: data.secure_url,
           });
           setUserData((prev) => ({
@@ -196,6 +196,7 @@ export default function SettingsPage({
     } catch (err) {
       console.error(err);
       toast.error("Image upload failed");
+      console.log({ err });
       // Revert to previous image
       handleChange("profileImageUrl", userData?.profileImageUrl ?? "");
     } finally {
@@ -212,7 +213,7 @@ export default function SettingsPage({
   const handleSave = async () => {
     if (typeof window === "undefined") return;
 
-    const identifier = localStorage.getItem("identifier");
+    const identifier = localStorage.getItem("identifier")?.toLowerCase();
     if (!identifier) {
       toast.error("No user identifier found");
       return;
@@ -238,7 +239,10 @@ export default function SettingsPage({
           : null,
       };
 
-      const updated = await updateUserByEmail(identifier, payload);
+      const updated = await updateUserByEmail(
+        identifier.toLowerCase(),
+        payload
+      );
 
       if (!updated) {
         throw new Error("Update failed");
