@@ -35,7 +35,11 @@ export default function LoginPage({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!identifier || !password) {
+    // Trim inputs before using them
+    const trimmedIdentifier = identifier.trim();
+    const trimmedPassword = password.trim();
+
+    if (!trimmedIdentifier || !trimmedPassword) {
       toast.error("Please enter both email/phone and password");
       return;
     }
@@ -43,21 +47,25 @@ export default function LoginPage({
     setIsLoading(true);
 
     try {
-      const res = await loginAction({ identifier, password });
+      const res = await loginAction({
+        identifier: trimmedIdentifier,
+        password: trimmedPassword,
+      });
 
       if (!res.success) {
         toast.error(res.message || "Invalid credentials");
         setIsLoading(false);
         return;
       }
-      const user = await getUserByEmail(identifier.toLowerCase());
-      console.log({ identifier });
-      console.log({ user, identifier });
+
+      const user = await getUserByEmail(trimmedIdentifier.toLowerCase());
+      console.log({ identifier: trimmedIdentifier });
+      console.log({ user, identifier: trimmedIdentifier });
       setUserData(user?.user);
 
       // Store OTP in localStorage
       localStorage.setItem("otp", res.otp!);
-      localStorage.setItem("identifier", identifier); // optional, to remember which user
+      localStorage.setItem("identifier", trimmedIdentifier);
 
       toast.success("Login successful! OTP sent to your email.");
 
@@ -99,6 +107,7 @@ export default function LoginPage({
               Sign in to your account to continue
             </CardDescription>
           </CardHeader>
+
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
@@ -110,7 +119,7 @@ export default function LoginPage({
                   type="text"
                   placeholder="Enter your email or phone number"
                   value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
+                  onChange={(e) => setIdentifier(e.target.value.trimStart())}
                   className="h-10"
                   disabled={isLoading}
                 />
@@ -125,7 +134,7 @@ export default function LoginPage({
                   type="password"
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value.trimStart())}
                   className="h-10"
                   disabled={isLoading}
                 />
