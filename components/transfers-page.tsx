@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -26,8 +26,8 @@ import {
   Building2,
   User,
   X,
-  AlertTriangle,
   Smartphone,
+  CheckCircle2,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -81,7 +81,7 @@ const recentTransactions = [
     id: 1,
     recipient: "Olivia Parker",
     amount: 2500,
-    date: "Today, 2:30 PM",
+    date: "Aug 13, 2:30 PM", // 3 months ago
     status: "completed",
     type: "ACH Transfer",
   },
@@ -89,7 +89,7 @@ const recentTransactions = [
     id: 2,
     recipient: "Liam Thompson",
     amount: 5000,
-    date: "Yesterday, 4:15 PM",
+    date: "Aug 12, 4:15 PM",
     status: "completed",
     type: "Wire Transfer",
   },
@@ -97,7 +97,7 @@ const recentTransactions = [
     id: 3,
     recipient: "Sophia Martinez",
     amount: 3000,
-    date: "Nov 7, 11:20 AM",
+    date: "Aug 11, 11:20 AM",
     status: "pending",
     type: "ACH Transfer",
   },
@@ -105,7 +105,7 @@ const recentTransactions = [
     id: 4,
     recipient: "Noah Wilson",
     amount: 4500,
-    date: "Nov 6, 9:00 AM",
+    date: "Aug 10, 9:00 AM",
     status: "completed",
     type: "Internal Transfer",
   },
@@ -113,7 +113,7 @@ const recentTransactions = [
     id: 5,
     recipient: "Emma Johnson",
     amount: 2800,
-    date: "Nov 5, 1:45 PM",
+    date: "Aug 9, 1:45 PM",
     status: "completed",
     type: "ACH Transfer",
   },
@@ -122,33 +122,15 @@ const recentTransactions = [
 export default function TransfersPage() {
   const [recipients, setRecipients] = useState(initialRecipients);
   const [amount, setAmount] = useState("");
-  const [selectedRecipient, setSelectedRecipient] = useState<{
-    id: number;
-    name: string;
-    account: string;
-    initials: string;
-    bankAccountName: string;
-    bankName: string;
-    routingNumber: string;
-    accountNumber: string;
-  }>(
-    {} as {
-      id: number;
-      name: string;
-      account: string;
-      initials: string;
-      bankAccountName: string;
-      bankName: string;
-      routingNumber: string;
-      accountNumber: string;
-    }
-  );
+  const [selectedRecipient, setSelectedRecipient] = useState<any>({});
   const [transferType, setTransferType] = useState("ach");
   const [showPinModal, setShowPinModal] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
   const [showAddRecipientModal, setShowAddRecipientModal] = useState(false);
-  const [showDeviceErrorModal, setShowDeviceErrorModal] = useState(false);
   const [pin, setPin] = useState("");
+  const [otp, setOtp] = useState("");
   const [note, setNote] = useState("");
+  const [otpPhone] = useState("+1 (707) 230-9560"); // US phone number
 
   // Recipient fields
   const [recipientName, setRecipientName] = useState("");
@@ -166,16 +148,7 @@ export default function TransfersPage() {
   const [newRoutingNumber, setNewRoutingNumber] = useState("");
   const [newAccountNumber, setNewAccountNumber] = useState("");
 
-  const handleRecipientSelect = (recipient: {
-    id: number;
-    name: string;
-    account: string;
-    initials: string;
-    bankAccountName: string;
-    bankName: string;
-    routingNumber: string;
-    accountNumber: string;
-  }) => {
+  const handleRecipientSelect = (recipient: any) => {
     setSelectedRecipient(recipient);
     setRecipientName(recipient.name);
     setAccountName(recipient.bankAccountName);
@@ -185,18 +158,7 @@ export default function TransfersPage() {
   };
 
   const clearRecipientSelection = () => {
-    setSelectedRecipient(
-      {} as {
-        id: number;
-        name: string;
-        account: string;
-        initials: string;
-        bankAccountName: string;
-        bankName: string;
-        routingNumber: string;
-        accountNumber: string;
-      }
-    );
+    setSelectedRecipient({});
     setRecipientName("");
     setRoutingNumber("");
     setAccountNumber("");
@@ -274,11 +236,14 @@ export default function TransfersPage() {
 
   const handlePinSubmit = () => {
     if (pin === "9900") {
-      // Correct PIN - Show device error
+      // Correct PIN - Show OTP modal
       setShowPinModal(false);
       setPin("");
       setTimeout(() => {
-        setShowDeviceErrorModal(true);
+        setShowOtpModal(true);
+        toast.success("OTP Sent", {
+          description: `Verification code sent to ${otpPhone}`,
+        });
       }, 300);
     } else {
       // Incorrect PIN
@@ -290,6 +255,22 @@ export default function TransfersPage() {
         });
       }, 300);
     }
+  };
+
+  const handleOtpSubmit = () => {
+    // Always show incorrect OTP error
+    setOtp("");
+    toast.error("Incorrect OTP", {
+      description:
+        "The verification code you entered is incorrect. Please try again.",
+    });
+  };
+
+  const handleResendOtp = () => {
+    setOtp("");
+    toast.success("OTP Resent", {
+      description: `New verification code sent to ${otpPhone}`,
+    });
   };
 
   const getTransferTypeIcon = (type: string) => {
@@ -443,7 +424,7 @@ export default function TransfersPage() {
                 <Label className="text-sm font-semibold">
                   Quick Select Recipient (Optional)
                 </Label>
-                {selectedRecipient && (
+                {selectedRecipient.id && (
                   <Button
                     variant="ghost"
                     size="sm"
@@ -538,7 +519,7 @@ export default function TransfersPage() {
                 value={recipientName}
                 onChange={(e) => setRecipientName(e.target.value)}
                 className="border-2"
-                disabled={!!selectedRecipient}
+                disabled={!!selectedRecipient.id}
               />
             </div>
 
@@ -857,74 +838,126 @@ export default function TransfersPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Device Error Modal */}
-      <Dialog
-        open={showDeviceErrorModal}
-        onOpenChange={setShowDeviceErrorModal}
-      >
+      {/* OTP Verification Modal */}
+      <Dialog open={showOtpModal} onOpenChange={setShowOtpModal}>
         <DialogContent className="sm:max-w-[480px]">
           <DialogHeader>
-            <DialogTitle className="text-center text-xl font-bold text-red-600 dark:text-red-400 flex items-center justify-center gap-2">
-              <AlertTriangle className="w-6 h-6" />
-              Transfer Blocked
+            <DialogTitle className="text-center text-xl font-bold">
+              Verify Your Identity
             </DialogTitle>
-            <DialogDescription className="text-center text-base">
-              Unable to complete transaction from this device
+            <DialogDescription className="text-center">
+              Enter the 6-digit code sent to your phone
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col items-center gap-6 py-6">
-            <div className="w-20 h-20 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
-              <Smartphone className="w-10 h-10 text-red-600 dark:text-red-400" />
+            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
+              <Smartphone className="w-10 h-10 text-green-600 dark:text-green-400" />
             </div>
 
-            <div className="text-center space-y-3 px-4">
-              <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                Security Alert: Unrecognized Device
+            <div className="text-center space-y-2">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Verification code sent to
               </p>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                For your security, money transfers can only be initiated from
-                your registered device. This helps protect your account from
-                unauthorized access.
-              </p>
-
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-lg p-4 mt-4">
-                <p className="text-sm text-amber-900 dark:text-amber-100 font-medium mb-2">
-                  To complete this transfer:
+              <p className="text-lg font-bold">{otpPhone}</p>
+              <div className="flex items-center justify-center gap-2 mt-3">
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <p className="text-xs text-green-600 dark:text-green-400 font-medium">
+                  Code sent successfully
                 </p>
-                <ul className="text-xs text-amber-800 dark:text-amber-200 space-y-1 text-left">
-                  <li>• Log in from your original registered device</li>
-                  <li>• Or contact support to add this device</li>
-                  <li>• Verify your identity through our security process</li>
-                </ul>
+              </div>
+            </div>
+
+            <div className="w-full space-y-4">
+              <div className="flex justify-center">
+                <InputOTP
+                  maxLength={6}
+                  value={otp}
+                  onChange={(val) => setOtp(val)}
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot
+                      index={0}
+                      className="w-12 h-14 text-2xl border-2"
+                    />
+                    <InputOTPSlot
+                      index={1}
+                      className="w-12 h-14 text-2xl border-2"
+                    />
+                    <InputOTPSlot
+                      index={2}
+                      className="w-12 h-14 text-2xl border-2"
+                    />
+                    <InputOTPSlot
+                      index={3}
+                      className="w-12 h-14 text-2xl border-2"
+                    />
+                    <InputOTPSlot
+                      index={4}
+                      className="w-12 h-14 text-2xl border-2"
+                    />
+                    <InputOTPSlot
+                      index={5}
+                      className="w-12 h-14 text-2xl border-2"
+                    />
+                  </InputOTPGroup>
+                </InputOTP>
               </div>
 
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-4">
-                Device ID:{" "}
-                {Math.random().toString(36).substring(2, 15).toUpperCase()}
-              </p>
+              <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <div className="text-center w-full">
+                    <p className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
+                      Transaction Summary
+                    </p>
+                    <div className="space-y-1 text-xs text-blue-700 dark:text-blue-300">
+                      <p>
+                        Amount: <span className="font-bold">${amount}</span>
+                      </p>
+                      <p>
+                        To: <span className="font-medium">{recipientName}</span>
+                      </p>
+                      <p>
+                        Type:{" "}
+                        <span className="font-medium">
+                          {getTransferTypeName(transferType)}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="w-full space-y-3">
               <Button
-                onClick={() => setShowDeviceErrorModal(false)}
+                onClick={handleOtpSubmit}
+                disabled={otp.length !== 6}
                 className="w-full h-12 bg-blue-600 hover:bg-blue-700 font-semibold text-base"
               >
-                I Understand
+                Verify & Complete Transfer
               </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setShowDeviceErrorModal(false);
-                  toast.info("Contact Support", {
-                    description:
-                      "Please call 1-800-BANK-HELP for device registration assistance",
-                  });
-                }}
-                className="w-full h-10 font-medium text-sm"
+
+              <button
+                onClick={handleResendOtp}
+                className="w-full text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium"
               >
-                Contact Support
-              </Button>
+                Didn't receive code? Resend OTP
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowOtpModal(false);
+                  setOtp("");
+                }}
+                className="w-full text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors"
+              >
+                Cancel Transaction
+              </button>
             </div>
+
+            <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
+              This code expires in 5 minutes
+            </p>
           </div>
         </DialogContent>
       </Dialog>

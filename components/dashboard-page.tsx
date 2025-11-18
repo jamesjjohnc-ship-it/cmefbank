@@ -125,7 +125,7 @@ export default function DashboardPage({
     setIsCardsDrawerOpen(true);
   };
 
-  const balance = 912458.37;
+  const balance = 9912458.37;
   const hours = new Date().getHours();
   const greeting =
     hours < 12
