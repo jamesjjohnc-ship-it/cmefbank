@@ -8,6 +8,7 @@ import InvestPage from "@/components/invest-page";
 import AnalyticsPage from "@/components/analytics-page";
 import SettingsPage from "@/components/settings-page";
 import { useAppContext, AppProvider } from "@/app/context/appcontext";
+import MerchandizePage from "@/components/merchandize-page";
 
 // Optional: a simple spinner for loading
 function LoadingSpinner() {
@@ -61,6 +62,8 @@ function HomeContent() {
       return (
         <SettingsPage onNavigate={setCurrentPage} onLogout={handleLogout} />
       );
+    case "merchandize":
+      return <MerchandizePage />;
     default:
       return (
         <DashboardPage

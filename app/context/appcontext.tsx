@@ -9,7 +9,13 @@ import {
 } from "react";
 import { getUserByEmail } from "@/actions";
 
-type PageType = "home" | "transfers" | "invest" | "analytics" | "settings";
+type PageType =
+  | "home"
+  | "transfers"
+  | "invest"
+  | "analytics"
+  | "settings"
+  | "merchandize";
 type AuthStep = "login" | "2fa" | "authenticated";
 
 interface AppContextType {

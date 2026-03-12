@@ -38,7 +38,9 @@ import Image from "next/image";
 import BottomNav from "./bottomNav";
 interface DashboardPageProps {
   onLogout: () => void;
-  onNavigate: (page: "home" | "transfers" | "invest" | "analytics") => void;
+  onNavigate: (
+    page: "home" | "transfers" | "invest" | "analytics" | "merchandize"
+  ) => void;
   data?: Record<string, any>;
 }
 
@@ -261,6 +263,14 @@ export default function DashboardPage({
           >
             <TrendingUp className="w-5 h-5" />
             <span className="text-xs font-medium">Invest</span>
+          </Button>
+          <Button
+            onClick={() => onNavigate("merchandize")}
+            variant="outline"
+            className="h-16 flex flex-col items-center justify-center gap-2 rounded-lg bg-transparent"
+          >
+            <Send className="w-5 h-5 text-accent" />
+            <span className="text-xs font-medium">Merchandize</span>
           </Button>
           <Button
             variant="outline"

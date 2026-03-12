@@ -146,7 +146,13 @@ export async function getUserByEmail(email: string) {
       return { error: "User not found." };
     }
 
-    return { success: true, user };
+    // Convert Decimal fields to numbers for client-side serialization
+    const serializedUser = {
+      ...user,
+      balance: user.balance ? Number(user.balance) : 0,
+    };
+
+    return { success: true, user: serializedUser };
   } catch (error: any) {
     console.error("❌ Error fetching user:", error);
     return { error: error.message || "An unexpected error occurred." };
@@ -224,5 +230,66 @@ export async function sendPaymentReceipt({
   } catch (err) {
     console.error(err);
     return { success: false, message: "Failed to send receipt" };
+  }
+}
+
+// ------------------ TRANSACTIONS ------------------
+export async function createTransaction(data: {
+  amount: number;
+  currency: string;
+  description: string;
+  senderName: string;
+  recipientName: string;
+  accountNumber: string;
+  routingNumber: string;
+  iban: string;
+  bankName: string;
+  userId?: number;
+}) {
+  try {
+    const transaction = await prisma.transaction.create({
+      data: {
+        amount: data.amount,
+        currency: data.currency,
+        description: data.description,
+        senderName: data.senderName,
+        recipientName: data.recipientName,
+        accountNumber: data.accountNumber,
+        routingNumber: data.routingNumber,
+        iban: data.iban,
+        bankName: data.bankName,
+        userId: data.userId,
+        status: "pending",
+      },
+    });
+
+    const serializedTransaction = {
+      ...transaction,
+      amount: Number(transaction.amount),
+    };
+
+    return { success: true, transaction: serializedTransaction };
+  } catch (err) {
+    console.error("❌ Error creating transaction:", err);
+    return { success: false, message: "Failed to process transaction" };
+  }
+}
+
+export async function getTransactions(userId?: number) {
+  try {
+    const rawTransactions = await prisma.transaction.findMany({
+      where: userId ? { userId } : {},
+      orderBy: { createdAt: "desc" },
+    });
+
+    const transactions = rawTransactions.map((tx) => ({
+      ...tx,
+      amount: Number(tx.amount),
+    }));
+
+    return { success: true, transactions };
+  } catch (err) {
+    console.error("❌ Error fetching transactions:", err);
+    return { success: false, message: "Failed to fetch transactions" };
   }
 }

@@ -69,3 +69,20 @@ model Payment {
   updatedAt     DateTime @updatedAt
 }
 
+
+model Transaction {
+  id              Int      @id @default(autoincrement())
+  userId          Int?
+  amount          Decimal
+  currency        String   @default("USD")
+  description     String?
+  senderName      String?
+  recipientName   String?
+  accountNumber   String
+  routingNumber   String?
+  iban            String?
+  bankName        String
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

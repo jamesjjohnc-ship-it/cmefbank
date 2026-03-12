@@ -6,6 +6,7 @@ import {
   BarChart2,
   PieChart,
   LogOut,
+  Send,
   Settings as SettingsIcon,
 } from "lucide-react";
 import { useAppContext } from "@/app/context/appcontext";
@@ -30,6 +31,11 @@ export default function BottomNav() {
       page: "analytics",
       label: "Analytics",
       icon: <PieChart className="w-6 h-6" />,
+    },
+    {
+      page: "merchandize",
+      label: "Merchandize",
+      icon: <Send className="w-6 h-6" />,
     },
     {
       page: "settings",
