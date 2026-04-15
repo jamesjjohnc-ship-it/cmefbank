@@ -15,12 +15,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import BottomNav from "./bottomNav";
+import { useAppContext } from "@/app/context/appcontext";
+import { useRouter } from "next/navigation";
 
-interface InvestPageProps {
-  onLogout: () => void;
-  onNavigate: (page: "home" | "transfers" | "invest" | "analytics") => void;
-}
+interface AnalyticsPageProps {}
 
 const portfolioData = [
   { month: "Jan", value: 10000 },
@@ -94,7 +92,9 @@ const investments = [
   },
 ];
 
-export default function InvestPage({ onLogout, onNavigate }: InvestPageProps) {
+export default function AnalyticsPage({}: AnalyticsPageProps) {
+  const { handleLogout } = useAppContext();
+  const router = useRouter();
   const [amount, setAmount] = useState("");
   const [selectedInvestment, setSelectedInvestment] = useState<
     (typeof investments)[0] | null
@@ -124,7 +124,7 @@ export default function InvestPage({ onLogout, onNavigate }: InvestPageProps) {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => onNavigate("home")}
+              onClick={() => router.push("/dashboard")}
               className="p-2 hover:bg-muted rounded-lg transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -137,7 +137,7 @@ export default function InvestPage({ onLogout, onNavigate }: InvestPageProps) {
             </div>
           </div>
           <Button
-            onClick={onLogout}
+            onClick={handleLogout}
             variant="outline"
             className="h-10 text-sm bg-transparent"
           >
@@ -317,8 +317,7 @@ export default function InvestPage({ onLogout, onNavigate }: InvestPageProps) {
         </Card>
       </main>
 
-      {/* Bottom Navigation */}
-      <BottomNav />
+      {/* Main Content End */}
     </div>
   );
 }

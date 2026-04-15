@@ -17,12 +17,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import BottomNav from "./bottomNav";
+import { useAppContext } from "@/app/context/appcontext";
+import { useRouter } from "next/navigation";
 
-interface AnalyticsPageProps {
-  onLogout: () => void;
-  onNavigate: (page: "home" | "transfers" | "invest" | "analytics") => void;
-}
+interface AnalyticsPageProps {}
 
 const monthlyData = [
   { month: "Jan", income: 500034, expenses: 3200, savings: 1800 },
@@ -42,10 +40,9 @@ const categoryData = [
   { name: "Other", value: 34450, color: "#8b5cf6" },
 ];
 
-export default function AnalyticsPage({
-  onLogout,
-  onNavigate,
-}: AnalyticsPageProps) {
+export default function AnalyticsPage({}: AnalyticsPageProps) {
+  const { handleLogout } = useAppContext();
+  const router = useRouter();
   const totalIncome = monthlyData.reduce((sum, m) => sum + m.income, 0);
   const totalExpenses = monthlyData.reduce((sum, m) => sum + m.expenses, 0);
   const totalSavings = monthlyData.reduce((sum, m) => sum + m.savings, 0);
@@ -58,7 +55,7 @@ export default function AnalyticsPage({
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => onNavigate("home")}
+              onClick={() => router.push("/dashboard")}
               className="p-2 hover:bg-muted rounded-lg transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -73,7 +70,7 @@ export default function AnalyticsPage({
             </div>
           </div>
           <Button
-            onClick={onLogout}
+            onClick={handleLogout}
             variant="outline"
             className="h-10 text-sm bg-transparent"
           >
@@ -303,8 +300,7 @@ export default function AnalyticsPage({
         </Card>
       </main>
 
-      {/* Bottom Navigation */}
-      <BottomNav />
+      {/* Main Content End */}
     </div>
   );
 }

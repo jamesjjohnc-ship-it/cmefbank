@@ -7,14 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { getUserByEmail, updateUserByEmail } from "@/actions";
-import BottomNav from "./bottomNav";
+import { useAppContext } from "@/app/context/appcontext";
+import { useRouter } from "next/navigation";
 
-interface SettingsPageProps {
-  onLogout: () => void;
-  onNavigate: (
-    page: "home" | "transfers" | "invest" | "analytics" | "settings"
-  ) => void;
-}
+interface SettingsPageProps {}
 
 function LoadingOverlay() {
   return (
@@ -24,10 +20,9 @@ function LoadingOverlay() {
   );
 }
 
-export default function SettingsPage({
-  onLogout,
-  onNavigate,
-}: SettingsPageProps) {
+export default function SettingsPage({}: SettingsPageProps) {
+  const { handleLogout } = useAppContext();
+  const router = useRouter();
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -280,7 +275,7 @@ export default function SettingsPage({
         <div className="text-center space-y-4">
           <h2 className="text-2xl font-bold text-foreground">User Not Found</h2>
           <p className="text-muted-foreground">Unable to load your settings.</p>
-          <Button onClick={onLogout} variant="outline">
+          <Button onClick={handleLogout} variant="outline">
             Return to Login
           </Button>
         </div>
@@ -296,7 +291,7 @@ export default function SettingsPage({
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-xl font-bold text-foreground">Settings</h1>
           <Button
-            onClick={onLogout}
+            onClick={handleLogout}
             variant="outline"
             className="h-10 text-sm bg-transparent"
           >
@@ -452,7 +447,7 @@ export default function SettingsPage({
         </Card>
       </main>
 
-      <BottomNav />
+      {/* Main Content End */}
     </div>
   );
 }

@@ -35,10 +35,15 @@ model User {
   accountNumber   String?   @unique
   accountType     String?
   balance         Decimal?  @default(0.00)
-  currency        String?   @default("NGN")
+  currency        String?   @default("USD")
   isVerified      Boolean   @default(false)
   kycLevel        String?
   profileImageUrl String?
+
+  // --- Enhanced banking metrics ---
+  availableBalance  Decimal?  @default(0.00)
+  sentThisMonth     Decimal?  @default(0.00)
+  pendingAmount     Decimal?  @default(0.00)
 
   // ✅ Newly added
   hasPaidTransferFee Boolean @default(false)
@@ -78,10 +83,13 @@ model Transaction {
   description     String?
   senderName      String?
   recipientName   String?
-  accountNumber   String
+  accountNumber   String?
   routingNumber   String?
   iban            String?
-  bankName        String
+  bankName        String?
+  type            String   @default("expense") // "income" or "expense"
+  category        String?
+  merchant        String?
   status          String   @default("pending")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

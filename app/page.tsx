@@ -1,84 +1,21 @@
 "use client";
 
-import LoginPage from "@/components/login-page";
-import TwoFAPage from "@/components/two-fa-page";
-import DashboardPage from "@/components/dashboard-page";
-import TransfersPage from "@/components/transfers-page";
-import InvestPage from "@/components/invest-page";
-import AnalyticsPage from "@/components/analytics-page";
-import SettingsPage from "@/components/settings-page";
-import { useAppContext, AppProvider } from "@/app/context/appcontext";
-import MerchandizePage from "@/components/merchandize-page";
-
-// Optional: a simple spinner for loading
-function LoadingSpinner() {
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-}
-
-function HomeContent() {
-  const {
-    authStep,
-    currentPage,
-    userData,
-    setAuthStep,
-    setCurrentPage,
-    handleLogout,
-    loading,
-  } = useAppContext();
-
-  // Auth flow
-  if (authStep !== "authenticated") {
-    return authStep === "login" ? (
-      <LoginPage
-        onLogin={() => setAuthStep("2fa")}
-        onNavigateTo2FA={() => setAuthStep("2fa")}
-      />
-    ) : (
-      <TwoFAPage
-        onBack={() => setAuthStep("login")}
-        onVerify={() => setAuthStep("authenticated")}
-      />
-    );
-  }
-
-  // Loading spinner
-  if (loading) return <LoadingSpinner />;
-
-  // Render pages based on currentPage
-  switch (currentPage) {
-    case "transfers":
-      return <TransfersPage />;
-    case "invest":
-      return <InvestPage onLogout={handleLogout} onNavigate={setCurrentPage} />;
-    case "analytics":
-      return (
-        <AnalyticsPage onLogout={handleLogout} onNavigate={setCurrentPage} />
-      );
-    case "settings":
-      return (
-        <SettingsPage onNavigate={setCurrentPage} onLogout={handleLogout} />
-      );
-    case "merchandize":
-      return <MerchandizePage />;
-    default:
-      return (
-        <DashboardPage
-          data={userData?.user}
-          onLogout={handleLogout}
-          onNavigate={setCurrentPage}
-        />
-      );
-  }
-}
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
+import FeatureGrid from "@/components/FeatureGrid";
+import ArticleGrid from "@/components/ArticleGrid";
 
 export default function Home() {
   return (
-    <AppProvider>
-      <HomeContent />
-    </AppProvider>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <HeroSection />
+        <FeatureGrid />
+        <ArticleGrid />
+      </main>
+      <Footer />
+    </div>
   );
 }

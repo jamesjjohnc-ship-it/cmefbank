@@ -32,16 +32,31 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [authStep, setAuthStep] = useState<AuthStep>("login");
+  const [authStep, setAuthStepState] = useState<AuthStep>("login");
   const [currentPage, setCurrentPage] = useState<PageType>("home");
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
+  // Sync authStep with localStorage on mount
+  useEffect(() => {
+    const savedStep = localStorage.getItem("authStep") as AuthStep;
+    if (savedStep && ["login", "2fa", "authenticated"].includes(savedStep)) {
+      setAuthStepState(savedStep);
+    }
+  }, []);
+
+  const setAuthStep = (step: AuthStep) => {
+    setAuthStepState(step);
+    localStorage.setItem("authStep", step);
+  };
 
   const handleLogout = () => {
     setAuthStep("login");
     setCurrentPage("home");
     setUserData(null);
     localStorage.removeItem("identifier");
+    localStorage.removeItem("authStep");
+    localStorage.removeItem("otp");
   };
 
   // Fetch user when authenticated

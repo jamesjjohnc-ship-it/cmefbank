@@ -138,9 +138,12 @@ export async function getUserByEmail(email: string) {
       throw new Error("Invalid email provided.");
     }
 
-    const user = await prisma.user.findUnique({
-      where: { email: lowerEmail },
-    });
+    // Fetch using raw SQL since the generated client may be out of date
+    const rawUsers: any[] = await prisma.$queryRaw`
+      SELECT * FROM "User" WHERE LOWER(email) = ${lowerEmail} LIMIT 1
+    `;
+    
+    const user = rawUsers[0];
 
     if (!user) {
       return { error: "User not found." };
@@ -150,6 +153,9 @@ export async function getUserByEmail(email: string) {
     const serializedUser = {
       ...user,
       balance: user.balance ? Number(user.balance) : 0,
+      availableBalance: user.availableBalance ? Number(user.availableBalance) : 0,
+      sentThisMonth: user.sentThisMonth ? Number(user.sentThisMonth) : 0,
+      pendingAmount: user.pendingAmount ? Number(user.pendingAmount) : 0,
     };
 
     return { success: true, user: serializedUser };
@@ -291,5 +297,63 @@ export async function getTransactions(userId?: number) {
   } catch (err) {
     console.error("❌ Error fetching transactions:", err);
     return { success: false, message: "Failed to fetch transactions" };
+  }
+}
+
+// ------------------ ADMIN ACTIONS ------------------
+
+export async function adminUpdateUserMetrics(email: string, data: {
+  balance: number;
+  availableBalance: number;
+  sentThisMonth: number;
+  pendingAmount: number;
+}) {
+  try {
+    // Using Raw SQL to bypass the out-of-date Prisma Client validation
+    const lowerEmail = email.toLowerCase();
+    await prisma.$executeRaw`
+      UPDATE "User"
+      SET balance = ${data.balance},
+          "availableBalance" = ${data.availableBalance},
+          "sentThisMonth" = ${data.sentThisMonth},
+          "pendingAmount" = ${data.pendingAmount}
+      WHERE LOWER(email) = ${lowerEmail}
+    `;
+    
+    return { success: true };
+  } catch (err) {
+    console.error("❌ Admin update failed:", err);
+    return { success: false, message: "Failed to update user metrics" };
+  }
+}
+
+export async function adminBulkCreateTransactions(email: string, transactions: any[]) {
+  try {
+    const rawUsers: any[] = await prisma.$queryRaw`
+      SELECT id FROM "User" WHERE LOWER(email) = ${email.toLowerCase()} LIMIT 1
+    `;
+    const user = rawUsers[0];
+    if (!user) return { success: false, message: "User not found" };
+
+    // Inject transactions using raw SQL or bypass createMany validation
+    for (const tx of transactions) {
+      await prisma.$executeRaw`
+        INSERT INTO "Transaction" (
+          amount, currency, description, "senderName", "recipientName", 
+          "accountNumber", "bankName", type, category, merchant, status, "userId"
+        ) VALUES (
+          ${tx.amount}, ${tx.currency || 'USD'}, ${tx.description}, 
+          ${tx.senderName || 'Self'}, ${tx.recipientName || 'External'}, 
+          ${tx.accountNumber || 'N/A'}, ${tx.bankName || 'Pinnacle'}, 
+          ${tx.type}, ${tx.category || 'General'}, ${tx.merchant}, 
+          ${tx.status}, ${user.id}
+        )
+      `;
+    }
+
+    return { success: true, count: transactions.length };
+  } catch (err) {
+    console.error("❌ Bulk create failed:", err);
+    return { success: false, message: "Failed to create transactions" };
   }
 }

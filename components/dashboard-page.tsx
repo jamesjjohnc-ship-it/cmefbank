@@ -26,72 +26,78 @@ import {
   Wallet,
   ArrowUpRight,
   ArrowDownLeft,
+  RefreshCw,
+  Loader2,
 } from "lucide-react";
-import TransactionDetailDrawer from "./transaction-detail-drawer";
-import { TransactionItem } from "./transaction-detail-drawer";
-import { mockTransactions } from "./data";
+import { useEffect } from "react";
+import TransactionDetailDrawer, { TransactionItem } from "./transaction-detail-drawer";
+// import { mockTransactions } from "./data"; // Remove mock data
+import { getTransactions } from "@/actions";
 
 import { TransactionHistory } from "./transaction-detail-drawer";
 import CardsComponent, { CardItem } from "./cardsPage";
 import { toast } from "sonner";
 import Image from "next/image";
-import BottomNav from "./bottomNav";
+import { useAppContext } from "@/app/context/appcontext";
+import { useRouter } from "next/navigation";
+
 interface DashboardPageProps {
-  onLogout: () => void;
-  onNavigate: (
-    page: "home" | "transfers" | "invest" | "analytics" | "merchandize"
-  ) => void;
   data?: Record<string, any>;
 }
 
-const mockSpendingData = [
-  { month: "Aug", amount: 145000, income: 320000 },
-  { month: "Sep", amount: 168000, income: 340000 },
-  { month: "Oct", amount: 157000, income: 335000 },
-  { month: "Nov", amount: 174000, income: 360000 },
-];
-
-const mockCategoryData = [
-  {
-    name: "Real Estate Acquisitions",
-    value: 1250000,
-    color: "#1A5DAD", // Pinnacle Blue – premium, trusted
-  },
-  {
-    name: "SaaS",
-    value: 980000,
-    color: "#10B981", // Emerald – growth, innovation
-  },
-  {
-    name: "Asset Management",
-    value: 620000,
-    color: "#8B5CF6", // Amethyst – exclusivity
-  },
-  {
-    name: "Academic Engagements",
-    value: 380000,
-    color: "#F59E0B", // Gold – prestige, influence
-  },
-  {
-    name: "Philanthropy",
-    value: 450000,
-    color: "#EF4444", // Crimson – purpose, legacy
-  },
-  {
-    name: "Private Office ",
-    value: 290000,
-    color: "#EC4899", // Rose – refined support
-  },
-];
-
 export default function DashboardPage({
-  onLogout,
-  onNavigate,
   data,
 }: DashboardPageProps) {
+  const { handleLogout } = useAppContext();
+  const router = useRouter();
   const [showBalance, setShowBalance] = useState(true);
   const [isCardsDrawerOpen, setIsCardsDrawerOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [isLoadingTx, setIsLoadingTx] = useState(true);
+
+  const [selectedTransaction, setSelectedTransaction] = useState<any | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [showAllTransactions, setShowAllTransactions] = useState(false);
+
+  useEffect(() => {
+    async function loadTransactions() {
+      if (!data?.id) return;
+      setIsLoadingTx(true);
+      const res = await getTransactions(data.id);
+      if (res.success) {
+        setTransactions(res.transactions);
+      }
+      setIsLoadingTx(false);
+    }
+    loadTransactions();
+  }, [data?.id]);
+
+  const balance = data?.balance || 0;
+  const availableBalance = data?.availableBalance || 0;
+  const pendingAmount = data?.pendingAmount || 0;
+  const sentThisMonth = data?.sentThisMonth || 0;
+
+  const hours = new Date().getHours();
+  const greeting =
+    hours < 12
+      ? "Good Morning"
+      : hours < 18
+      ? "Good Afternoon"
+      : "Good Evening";
+
+  const handleTransactionClick = (transaction: any) => {
+    setSelectedTransaction(transaction);
+    setShowAllTransactions(false);
+    setIsDrawerOpen(true);
+  };
+
+  const handleViewAll = () => {
+    setSelectedTransaction(null);
+    setShowAllTransactions(true);
+    setIsDrawerOpen(true);
+  };
+
   const mockCards: CardItem[] = [
     {
       id: 1,
@@ -116,49 +122,19 @@ export default function DashboardPage({
     },
   ];
 
-  const [selectedTransaction, setSelectedTransaction] = useState<
-    (typeof mockTransactions)[0] | null
-  >(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [showAllTransactions, setShowAllTransactions] = useState(false);
-
-  const handleCardClick = (card: CardItem) => {
-    setSelectedCard(card);
-    setIsCardsDrawerOpen(true);
-  };
-
-  const balance = 9912458.37;
-  const hours = new Date().getHours();
-  const greeting =
-    hours < 12
-      ? "Good Morning"
-      : hours < 18
-      ? "Good Afternoon"
-      : "Good Evening";
-
-  const localeDate = new Intl.DateTimeFormat(undefined, {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date());
-  const monthlySpending = mockTransactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + Math.abs(t.amount), 0);
-
-  const handleTransactionClick = (
-    transaction: (typeof mockTransactions)[0]
-  ) => {
-    setSelectedTransaction(transaction);
-    setShowAllTransactions(false);
-    setIsDrawerOpen(true);
-  };
-
-  const handleViewAll = () => {
-    setSelectedTransaction(null);
-    setShowAllTransactions(true);
-    setIsDrawerOpen(true);
-  };
+  const mockSpendingData = [
+    { month: "Aug", amount: 145000, income: 320000 },
+    { month: "Sep", amount: 168000, income: 340000 },
+    { month: "Oct", amount: 157000, income: 335000 },
+    { month: "Nov", amount: 174000, income: 360000 },
+  ];
+  
+  const mockCategoryData = [
+    { name: "Real Estate Acquisitions", value: 1250000, color: "#1A5DAD" },
+    { name: "SaaS", value: 980000, color: "#10B981" },
+    { name: "Asset Management", value: 620000, color: "#8B5CF6" },
+    { name: "Philanthropy", value: 450000, color: "#EF4444" },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -179,7 +155,7 @@ export default function DashboardPage({
             <h1 className="text-xl font-bold text-foreground">Pinnacle Bank</h1>
           </div>
           <Button
-            onClick={onLogout}
+            onClick={handleLogout}
             variant="outline"
             className="h-10 text-sm bg-transparent"
           >
@@ -205,40 +181,82 @@ export default function DashboardPage({
         </div>
 
         {/* Account Balance Card */}
-        <Card className="mb-6 bg-primary text-primary-foreground shadow-lg border-0">
-          <CardContent className="pt-8 pb-8">
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-primary-foreground/80 text-sm mb-2">
-                  Total Balance
-                </p>
-                <div className="flex items-center gap-3">
-                  <h3 className="text-4xl font-bold tracking-tight">
-                    {showBalance
-                      ? `$${Number(balance.toFixed(2)).toLocaleString()}`
-                      : "••••••"}
-                  </h3>
-                  <button
-                    onClick={() => setShowBalance(!showBalance)}
-                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                  >
-                    {showBalance ? (
-                      <Eye className="w-5 h-5" />
-                    ) : (
-                      <EyeOff className="w-5 h-5" />
-                    )}
-                  </button>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="md:col-span-2 bg-[#003366] text-white shadow-xl border-0 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl" />
+            <CardContent className="pt-8 pb-8 relative z-10">
+              <div className="flex items-start justify-between">
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-blue-200 text-xs font-black uppercase tracking-[0.2em] mb-1">
+                      Total Ledger Balance
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-4xl sm:text-5xl font-black tracking-tighter">
+                        {showBalance
+                          ? `$${Number(balance).toLocaleString(undefined, { minimumFractionDigits: 2 })}`
+                          : "••••••"}
+                      </h3>
+                      <button
+                        onClick={() => setShowBalance(!showBalance)}
+                        className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                      >
+                        {showBalance ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="pt-4 border-t border-white/10">
+                     <p className="text-blue-300 text-[10px] font-black uppercase tracking-widest mb-1">Available Balance</p>
+                     <p className="text-2xl font-bold text-white">
+                        {showBalance ? `$${Number(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "••••••"}
+                     </p>
+                  </div>
+                </div>
+                <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-md">
+                   <Wallet className="w-8 h-8 text-white" />
                 </div>
               </div>
-              <Wallet className="w-12 h-12 opacity-80" />
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          <div className="space-y-6">
+             <Card className="bg-white border-0 shadow-lg group hover:translate-y-[-4px] transition-all">
+                <CardContent className="p-6">
+                   <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors">
+                         <TrendingDown className="w-5 h-5 text-green-600" />
+                      </div>
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">This Month</span>
+                   </div>
+                   <p className="text-slate-500 text-xs font-bold uppercase tracking-tight mb-1">Sent This Month</p>
+                   <h4 className="text-2xl font-black text-slate-900">
+                      ${Number(sentThisMonth).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                   </h4>
+                </CardContent>
+             </Card>
+
+             <Card className="bg-white border-0 shadow-lg group hover:translate-y-[-4px] transition-all">
+                <CardContent className="p-6">
+                   <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-amber-50 rounded-lg group-hover:bg-amber-100 transition-colors">
+                         <RefreshCw className="w-5 h-5 text-amber-600 animate-spin-slow" />
+                      </div>
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Awaiting</span>
+                   </div>
+                   <p className="text-slate-500 text-xs font-bold uppercase tracking-tight mb-1">Pending Transfer</p>
+                   <h4 className="text-2xl font-black text-slate-900">
+                      ${Number(pendingAmount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                   </h4>
+                </CardContent>
+             </Card>
+          </div>
+        </div>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Button
-            onClick={() => onNavigate("transfers")}
+            onClick={() => router.push("/dashboard/transfers")}
             className="h-16 flex flex-col items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg"
           >
             <Send className="w-5 h-5" />
@@ -257,7 +275,7 @@ export default function DashboardPage({
             <span className="text-xs font-medium">Add Money</span>
           </Button>
           <Button
-            onClick={() => onNavigate("invest")}
+            onClick={() => router.push("/dashboard/invest")}
             variant="outline"
             className="h-16 flex flex-col items-center justify-center gap-2 rounded-lg bg-transparent"
           >
@@ -265,7 +283,7 @@ export default function DashboardPage({
             <span className="text-xs font-medium">Invest</span>
           </Button>
           <Button
-            onClick={() => onNavigate("merchandize")}
+            onClick={() => router.push("/dashboard/merchandize")}
             variant="outline"
             className="h-16 flex flex-col items-center justify-center gap-2 rounded-lg bg-transparent"
           >
@@ -459,59 +477,69 @@ export default function DashboardPage({
           </CardHeader>
           <CardContent className="px-3">
             <div className="space-y-1">
-              {mockTransactions.map((transaction) => (
-                <button
-                  key={transaction.id}
-                  onClick={() => handleTransactionClick(transaction)}
-                  className="w-full flex items-center justify-between p-2 hover:bg-muted rounded-lg transition-colors group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3 flex-1">
-                    <div
-                      className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        transaction.type === "income"
-                          ? "bg-green-100"
-                          : "bg-muted"
-                      }`}
-                    >
-                      {transaction.type === "income" ? (
-                        <ArrowDownLeft className="w-5 h-5 text-green-600" />
-                      ) : (
-                        <ArrowUpRight className="w-5 h-5 text-muted-foreground" />
-                      )}
+              {isLoadingTx ? (
+                <div className="flex flex-col items-center py-12 gap-4">
+                   <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                   <p className="text-sm font-medium text-slate-400">Loading your history...</p>
+                </div>
+              ) : transactions.length > 0 ? (
+                transactions.map((transaction) => (
+                  <button
+                    key={transaction.id}
+                    onClick={() => handleTransactionClick(transaction)}
+                    className="w-full flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-all group cursor-pointer border border-transparent hover:border-slate-100"
+                  >
+                    <div className="flex items-center gap-4 flex-1">
+                      <div
+                        className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 ${
+                          transaction.type === "income"
+                            ? "bg-green-50"
+                            : "bg-slate-50"
+                        }`}
+                      >
+                        {transaction.type === "income" ? (
+                          <ArrowDownLeft className="w-6 h-6 text-green-600" />
+                        ) : (
+                          <ArrowUpRight className="w-6 h-6 text-slate-400" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0 text-left">
+                        <p className="font-bold text-slate-900 text-sm truncate">
+                          {transaction.description}
+                        </p>
+                        <p className="text-xs font-medium text-slate-400">
+                          {transaction.merchant}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-foreground text-sm">
-                        {transaction.description}
+                    <div className="text-right">
+                      <p
+                        className={`font-black text-sm ${
+                          transaction.type === "income"
+                            ? "text-green-600"
+                            : "text-slate-900"
+                        }`}
+                      >
+                        {transaction.type === "income" ? "+" : ""}$
+                        {Math.abs(transaction.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                       </p>
-                      <p className="text-xs text-muted-foreground">
-                        {transaction.merchant}
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+                        {new Date(transaction.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                       </p>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <p
-                      className={`font-semibold text-sm ${
-                        transaction.type === "income"
-                          ? "text-green-600"
-                          : "text-foreground"
-                      }`}
-                    >
-                      {transaction.type === "income" ? "+" : ""}$
-                      {Math.abs(transaction.amount).toFixed(2)}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {transaction.date}
-                    </p>
-                  </div>
-                </button>
-              ))}
+                  </button>
+                ))
+              ) : (
+                <div className="text-center py-12">
+                   <p className="text-slate-400 font-medium">No transactions found.</p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
       </main>
 
-      {/* Bottom Navigation */}
-      <BottomNav />
+      {/* Main Content End */}
 
       {/* Transaction Detail Drawer Component */}
       <TransactionDetailDrawer
@@ -525,7 +553,7 @@ export default function DashboardPage({
       >
         {showAllTransactions ? (
           <TransactionHistory
-            transactions={mockTransactions}
+            transactions={transactions}
             onTransactionClick={handleTransactionClick}
           />
         ) : selectedTransaction ? (

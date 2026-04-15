@@ -32,6 +32,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import BottomNav from "./bottomNav";
+import { useAppContext } from "@/app/context/appcontext";
 
 const initialRecipients = [
   {
@@ -120,6 +121,8 @@ const recentTransactions = [
 ];
 
 export default function TransfersPage() {
+  const { userData } = useAppContext();
+  const user = userData?.user;
   const [recipients, setRecipients] = useState(initialRecipients);
   const [amount, setAmount] = useState("");
   const [selectedRecipient, setSelectedRecipient] = useState<any>({});
@@ -345,7 +348,9 @@ export default function TransfersPage() {
                   <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
                     Available Balance
                   </p>
-                  <p className="text-2xl font-bold mt-1">$912,458.37</p>
+                  <p className="text-2xl font-bold mt-1">
+                    ${Number(user?.availableBalance || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
                   <Wallet className="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -361,7 +366,9 @@ export default function TransfersPage() {
                   <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
                     Sent This Month
                   </p>
-                  <p className="text-2xl font-bold mt-1">$33,250.00</p>
+                  <p className="text-2xl font-bold mt-1">
+                    ${Number(user?.sentThisMonth || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
                   <Send className="w-6 h-6 text-green-600 dark:text-green-400" />
@@ -377,7 +384,9 @@ export default function TransfersPage() {
                   <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
                     Pending
                   </p>
-                  <p className="text-2xl font-bold mt-1">$3,000.00</p>
+                  <p className="text-2xl font-bold mt-1">
+                    ${Number(user?.pendingAmount || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
                   <Clock className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />

@@ -5,12 +5,11 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
 const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+import { AppProvider } from "@/app/context/appcontext";
 
 export const metadata: Metadata = {
-  title: "Pinnacle Bank",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "Pinnacle Bank | Experience the Future of Banking",
+  description: "Secure, modern, and intuitive personal banking for the digital age. Manage your wealth, invest in your future, and protect your legacy with Pinnacle.",
   openGraph: {
     title: "Pinnacle Bank",
     description: "Personal Banking Made Simple",
@@ -29,6 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
+import Chatbot from "@/components/Chatbot";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,9 +38,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        {children}
-        <Analytics />
-        <Toaster position="top-right" className="z-[100000]" />
+        <AppProvider>
+          {children}
+          <Analytics />
+          <Toaster position="top-right" className="z-[100000]" />
+          <Chatbot />
+        </AppProvider>
       </body>
     </html>
   );
