@@ -8,19 +8,19 @@ const _geist = Geist({ subsets: ["latin"] });
 import { AppProvider } from "@/app/context/appcontext";
 
 export const metadata: Metadata = {
-  title: "Pinnacle Bank | Experience the Future of Banking",
-  description: "Secure, modern, and intuitive personal banking for the digital age. Manage your wealth, invest in your future, and protect your legacy with Pinnacle.",
+  title: "CMEF Bank | Experience the Future of Banking",
+  description: "Secure, modern, and intuitive personal banking for the digital age. Manage your wealth, invest in your future, and protect your legacy with CMEF Bank.",
   openGraph: {
-    title: "Pinnacle Bank",
+    title: "CMEF Bank",
     description: "Personal Banking Made Simple",
-    url: "https://www.pinnaclebank.com/",
-    siteName: "Pinnacle Bank",
+    url: "https://www.cmefgroup.com/",
+    siteName: "CMEF Bank",
     images: [
       {
-        url: "https://www.pinnaclebank.com/wp-content/uploads/2021/02/NewLogo-1-e1613617097688.png",
+        url: "https://www.cmefgroup.com/logo.png",
         width: 1200,
         height: 630,
-        alt: "Pinnacle Bank Logo",
+        alt: "CMEF Bank Logo",
       },
     ],
     locale: "en_US",
