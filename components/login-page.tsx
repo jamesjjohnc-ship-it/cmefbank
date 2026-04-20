@@ -29,7 +29,7 @@ export default function LoginPage({
 }: LoginPageProps) {
   const [identifier, setIdentifier] = useState(""); // email or phone
   const [password, setPassword] = useState("");
-  const { setUserData } = useAppContext();
+  const { setUserData, setAuthStep } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,8 +63,6 @@ export default function LoginPage({
       console.log({ user, identifier: trimmedIdentifier });
       setUserData(user?.user);
 
-      // Store OTP in localStorage
-      localStorage.setItem("otp", res.otp!);
       localStorage.setItem("identifier", trimmedIdentifier);
 
       toast.success("Login successful! OTP sent to your email.");
@@ -92,8 +90,8 @@ export default function LoginPage({
             <Image
               width={400}
               height={100}
-              alt="Pinnacle Bank Logo"
-              src="/pinnacle.png"
+              alt="CMEF Bank Logo"
+              src="/cmef-logo.png"
             />
           </div>
 
@@ -162,7 +160,7 @@ export default function LoginPage({
         </Card>
 
         <p className="text-xs text-muted-foreground text-center mt-4">
-          © 2025 Pinnacle Bank. All rights reserved.
+          © 2025 CMEF Bank. All rights reserved.
         </p>
       </div>
     </div>

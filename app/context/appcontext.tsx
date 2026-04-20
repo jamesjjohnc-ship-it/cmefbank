@@ -35,15 +35,34 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [authStep, setAuthStepState] = useState<AuthStep>("login");
   const [currentPage, setCurrentPage] = useState<PageType>("home");
   const [userData, setUserData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Sync authStep with localStorage on mount
+  // Consolidated Initialization: Sync auth state and fetch user data on mount
   useEffect(() => {
-    const savedStep = localStorage.getItem("authStep") as AuthStep;
-    if (savedStep && ["login", "2fa", "authenticated"].includes(savedStep)) {
-      setAuthStepState(savedStep);
-    }
-  }, []);
+    const initializeAuth = async () => {
+      const savedStep = localStorage.getItem("authStep") as AuthStep;
+      const identifier = localStorage.getItem("identifier");
+
+      if (savedStep && ["login", "2fa", "authenticated"].includes(savedStep)) {
+        setAuthStepState(savedStep);
+      }
+
+      if (identifier) {
+        try {
+          const res = await getUserByEmail(identifier);
+          if (res.success) {
+            setUserData(res.user);
+          }
+        } catch (err) {
+          console.error("Critical: Session restoration failed", err);
+        }
+      }
+      
+      setLoading(false);
+    };
+
+    initializeAuth();
+  }, [authStep]); // Still depend on authStep for state transitions during login flow
 
   const setAuthStep = (step: AuthStep) => {
     setAuthStepState(step);
@@ -58,26 +77,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("authStep");
     localStorage.removeItem("otp");
   };
-
-  // Fetch user when authenticated
-  useEffect(() => {
-    const fetchUser = async () => {
-      // if (authStep !== "authenticated") return;
-      const email = localStorage.getItem("identifier");
-      if (!email) return;
-
-      setLoading(true);
-      try {
-        const user = await getUserByEmail(email);
-        setUserData(user);
-      } catch (err) {
-        console.error("Error fetching user:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [authStep]);
 
   return (
     <AppContext.Provider

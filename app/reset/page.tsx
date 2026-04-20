@@ -187,8 +187,8 @@ export default function ForgotPasswordPage() {
         <Image
           width={400}
           height={100}
-          alt="Pinnacle Bank Logo"
-          src="/pinnacle.png"
+          alt="CMEF Bank Logo"
+          src="/cmef-logo.png"
         />
       </div>
       <div className="w-full max-w-sm">

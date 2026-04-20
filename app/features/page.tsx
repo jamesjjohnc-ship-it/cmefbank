@@ -19,7 +19,7 @@ const mainFeatures = [
     color: "text-green-600",
   },
   {
-    title: "Pinnacle Protection",
+    title: "CMEF Protection",
     description: "Advanced biometric security and 256-bit encryption keep your assets safe with 24/7 monitoring.",
     icon: Shield,
     color: "text-purple-600",
@@ -44,7 +44,7 @@ export default function FeaturesPage() {
               Banking features designed for the <span className="text-primary italic">modern era</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Explore the tools and services that make Pinnacle Bank the most powerful financial platform in your pocket.
+              Explore the tools and services that make CMEF Bank the most powerful financial platform in your pocket.
             </p>
           </div>
         </section>

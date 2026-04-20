@@ -117,7 +117,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#1A5DAD] mx-auto"></div>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#CDA644] mx-auto"></div>
           <p className="mt-4 text-sm text-gray-600">
             Loading secure payment portal...
           </p>
@@ -129,13 +129,13 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header - Pinnacle Bank Branding */}
+        {/* Header - CMEF Bank Branding */}
         <div className="text-center mb-10">
           <div className="flex justify-center items-center gap-3 mb-4">
-            <div className="bg-[#1A5DAD] text-white p-2 rounded-lg">
+            <div className="bg-[#CDA644] text-white p-2 rounded-lg">
               <Banknote className="h-8 w-8" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">Pinnacle Bank</h1>
+            <h1 className="text-3xl font-bold text-gray-900">CMEF Bank</h1>
           </div>
           <p className="text-lg text-gray-600">
             Secure Payment Verification Portal
@@ -152,7 +152,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
 
         {/* Payment Method Selection */}
         <Card className="shadow-lg border-0">
-          <CardHeader className="bg-gradient-to-r from-[#1A5DAD] to-[#0D47A1] text-white rounded-t-lg">
+          <CardHeader className="bg-gradient-to-r from-[#CDA644] to-[#B8860B] text-white rounded-t-lg">
             <CardTitle className="flex items-center gap-2 text-xl">
               <Smartphone className="h-5 w-5" />
               Select Payment Method
@@ -200,7 +200,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
                 className={`p-5 rounded-lg border-2 transition-all cursor-pointer
                   ${
                     selectedMethod === method
-                      ? "border-[#1A5DAD] bg-blue-50 shadow-md"
+                      ? "border-[#CDA644] bg-blue-50 shadow-md"
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 onClick={() => setSelectedMethod(method)}
@@ -210,7 +210,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
                     <div
                       className={`p-2 rounded-full ${
                         selectedMethod === method
-                          ? "bg-[#1A5DAD] text-white"
+                          ? "bg-[#CDA644] text-white"
                           : "bg-gray-200 text-gray-600"
                       }`}
                     >
@@ -238,7 +238,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
                     </div>
                   </div>
                   {selectedMethod === method && (
-                    <CheckCircle2 className="h-6 w-6 text-[#1A5DAD]" />
+                    <CheckCircle2 className="h-6 w-6 text-[#CDA644]" />
                   )}
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
 
         {/* Receipt Upload */}
         <Card className="mt-8 shadow-lg border-0">
-          <CardHeader className="bg-gradient-to-r from-[#1A5DAD] to-[#0D47A1] text-white rounded-t-lg">
+          <CardHeader className="bg-gradient-to-r from-[#CDA644] to-[#B8860B] text-white rounded-t-lg">
             <CardTitle className="flex items-center gap-2 text-xl">
               <FileImage className="h-5 w-5" />
               Upload Payment Receipt
@@ -273,14 +273,14 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
                 accept="image/*"
                 onChange={handleReceiptUpload}
                 disabled={uploading}
-                className="mt-3 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#1A5DAD] file:text-white hover:file:bg-[#0D47A1] disabled:opacity-50"
+                className="mt-3 block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#CDA644] file:text-white hover:file:bg-[#B8860B] disabled:opacity-50"
               />
             </div>
 
             <Button
               onClick={handleSubmit}
               disabled={!receiptUrl || uploading || isSubmitting}
-              className="w-full bg-[#1A5DAD] hover:bg-[#0D47A1] text-white font-semibold py-6 text-lg transition-all"
+              className="w-full bg-[#CDA644] hover:bg-[#B8860B] text-white font-semibold py-6 text-lg transition-all"
             >
               {isSubmitting ? "Submitting..." : "Submit for Verification"}
             </Button>
@@ -304,7 +304,7 @@ export default function PaymentPage({ userName, userEmail }: PaymentPageProps) {
 
         {/* Footer Trust Bar */}
         <div className="mt-12 text-center text-xs text-gray-500 space-y-1">
-          <p>© 2025 Pinnacle Bank. All rights reserved.</p>
+          <p>© 2025 CMEF Bank. All rights reserved.</p>
           <p className="flex items-center justify-center gap-1">
             <Lock className="h-3 w-3" /> Secured by industry-leading encryption
           </p>

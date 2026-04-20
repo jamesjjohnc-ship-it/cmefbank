@@ -7,7 +7,7 @@ import Image from "next/image";
 const articles = [
   {
     title: "Up to $20,000 this tax year",
-    description: "Make the most of your 2024/25 ISA allowance with a bank Selection Stocks and Shares ISA.",
+    description: "Make the most of your 2024/25 ISA allowance with a CMEF Stocks and Shares ISA.",
     image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=800",
     href: "/features",
   },
@@ -19,7 +19,7 @@ const articles = [
   },
   {
     title: "Ring-fencing",
-    description: "We're changing the way bank is structured in the EU.",
+    description: "We're changing the way CMEF Bank is structured in the EU.",
     image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=800",
     href: "/security",
   },
@@ -41,7 +41,7 @@ const secondaryArticles = [
   {
      title: "Helpful guides",
      description: "A range of guides and articles from understanding APRs to saving tips.",
-     image: "https://images.unsplash.com/photo-1434039347661-90f463f1f004?auto=format&fit=crop&q=80&w=800",
+     image: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&q=80&w=800",
      href: "/features",
   }
 ];

@@ -7,7 +7,7 @@ import Image from "next/image";
 const features = [
   {
     title: "Bank Accounts",
-    description: "Discover the benefits of a bank account from Pinnacle Savings Bank.",
+    description: "Discover the benefits of a bank account from CMEF Bank.",
     color: "bg-[#003366]/90",
     href: "/features",
     image: "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?auto=format&fit=crop&q=80&w=800",
@@ -24,14 +24,14 @@ const features = [
     description: "Check rates and order online now.",
     color: "bg-[#003366]/90",
     href: "/features",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109c0f3?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800",
   },
   {
     title: "Savings",
     description: "See how we could help your money work harder.",
     color: "bg-[#CC3333]/90",
     href: "/features",
-    image: "https://images.unsplash.com/photo-1579621970795-87f9da7f2928?auto=format&fit=crop&q=80&w=800",
+    image: "/savings-feature.png",
   },
   {
     title: "Insurance",
@@ -64,7 +64,7 @@ export default function FeatureGrid() {
             </div>
             
             {/* Overlay */}
-            <div className={`absolute inset-0 ${feature.color} opacity-95 flex flex-col justify-between p-8 sm:p-12 text-white transition-all duration-300 group-hover:p-10 sm:group-hover:p-14`}>
+            <div className={`absolute inset-0 ${feature.color} opacity-80 flex flex-col justify-between p-8 sm:p-12 text-white transition-all duration-300 group-hover:p-10 sm:group-hover:p-14`}>
               <div className="space-y-6">
                 <Link href={feature.href} className="inline-flex items-center gap-4 text-2xl sm:text-3xl font-bold hover:underline decoration-1 underline-offset-8">
                   {feature.title}

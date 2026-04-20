@@ -8,7 +8,7 @@ export default function DashboardOverview() {
 
   return (
     <DashboardPage
-      data={userData?.user}
+      data={userData}
     />
   );
 }

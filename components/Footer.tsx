@@ -16,7 +16,7 @@ const footerLinks = [
   {
     title: "FIND A BRANCH",
     links: [
-      { name: "Find your nearest Pinnacle Bank location", href: "/contact" },
+      { name: "Find your nearest CMEF Bank location", href: "/contact" },
       { name: "ATM Locator", href: "/contact" },
       { name: "International Offices", href: "/contact" },
     ],
@@ -30,7 +30,7 @@ const footerLinks = [
     ],
   },
   {
-    title: "ABOUT PINNACLE BANK",
+    title: "ABOUT CMEF BANK",
     links: [
       { name: "Careers, media, investor and corporate information", href: "/contact" },
       { name: "Our History", href: "/contact" },
@@ -90,7 +90,7 @@ export default function Footer() {
              <Link href="/security" className="hover:text-white">Security Centre</Link>
              <Link href="/contact" className="hover:text-white">Sitemap</Link>
              <Link href="/contact" className="hover:text-white">Accessibility</Link>
-             <span>© {new Date().getFullYear()} Pinnacle Bank. ALL RIGHTS RESERVED.</span>
+             <span>© {new Date().getFullYear()} CMEF Bank. ALL RIGHTS RESERVED.</span>
           </div>
         </div>
       </div>

@@ -8,23 +8,35 @@ const _geist = Geist({ subsets: ["latin"] });
 import { AppProvider } from "@/app/context/appcontext";
 
 export const metadata: Metadata = {
-  title: "CMEF Bank | Experience the Future of Banking",
-  description: "Secure, modern, and intuitive personal banking for the digital age. Manage your wealth, invest in your future, and protect your legacy with CMEF Bank.",
+  title: "CMEF Bank | Legacy of Trust, Future of Wealth",
+  description: "Experience the pinnacle of institutional private banking. Secure, bespoke, and traditional financial solutions for wealth builders. CMEF Bank - Protecting your legacy for generations.",
+  keywords: ["Private Banking", "Institutional Finance", "Wealth Management", "CMEF Bank", "Legacy Banking"],
+  authors: [{ name: "CMEF Group" }],
   openGraph: {
-    title: "CMEF Bank",
-    description: "Personal Banking Made Simple",
+    title: "CMEF Bank | Private Institutional Banking",
+    description: "Premium banking solutions tailored for the traditional wealth builder.",
     url: "https://www.cmefgroup.com/",
     siteName: "CMEF Bank",
     images: [
       {
-        url: "https://www.cmefgroup.com/logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CMEF Bank Logo",
+        alt: "CMEF Private Banking - Institutional Wealth Solutions",
       },
     ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CMEF Bank | Legacy of Trust",
+    description: "Institutional private banking for the digital age.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

@@ -1,12 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: "postgresql://neondb_owner:npg_AUGMF5ntd8ux@ep-frosty-term-a4loowz8-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require",
-    },
-  },
-});
+const prisma = new PrismaClient();
 
 async function main() {
   const email = "Danielhalltag@gmail.com";
@@ -31,7 +25,7 @@ async function main() {
       country: "USA",
       ssn: "987654321",
       occupation: "Investment Analyst",
-      employerName: "Pinnacle Financial",
+      employerName: "CMEF Bank",
       maritalStatus: "Married",
       accountNumber: "00246813579",
       accountType: "Savings",

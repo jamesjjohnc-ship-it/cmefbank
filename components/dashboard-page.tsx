@@ -130,7 +130,7 @@ export default function DashboardPage({
   ];
   
   const mockCategoryData = [
-    { name: "Real Estate Acquisitions", value: 1250000, color: "#1A5DAD" },
+    { name: "Real Estate Acquisitions", value: 1250000, color: "#CDA644" },
     { name: "SaaS", value: 980000, color: "#10B981" },
     { name: "Asset Management", value: 620000, color: "#8B5CF6" },
     { name: "Philanthropy", value: 450000, color: "#EF4444" },
@@ -147,12 +147,12 @@ export default function DashboardPage({
                 <Image
                   width={400}
                   height={100}
-                  alt="hello"
-                  src="/pinnacle.png"
+                  alt="CMEF Bank Logo"
+                  src="/cmef-logo.png"
                 />
               </span>
             </div>
-            <h1 className="text-xl font-bold text-foreground">Pinnacle Bank</h1>
+            <h1 className="text-xl font-bold text-foreground">CMEF Bank</h1>
           </div>
           <Button
             onClick={handleLogout}

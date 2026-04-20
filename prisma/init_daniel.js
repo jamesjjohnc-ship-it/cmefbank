@@ -1,12 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: "postgresql://neondb_owner:npg_AUGMF5ntd8ux@ep-frosty-term-a4loowz8.us-east-1.aws.neon.tech/neondb?sslmode=require",
-    },
-  },
-});
+const prisma = new PrismaClient();
 
 async function main() {
   const email = "danielhalltag@gmail.com";

@@ -48,7 +48,7 @@ export default function SecurityPage() {
                  The safest place for <br/><span className="text-blue-500">your money.</span>
                </h1>
                <p className="text-lg sm:text-xl text-slate-400 leading-relaxed italic">
-                 At Pinnacle Bank, we believe security isn't just a feature—it's the foundation of everything we build. We use military-grade technology to ensure your peace of mind.
+                 At CMEF Bank, we believe security isn't just a feature—it's the foundation of everything we build. We use military-grade technology to ensure your peace of mind.
                </p>
             </div>
           </div>

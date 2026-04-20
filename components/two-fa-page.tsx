@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, CheckCircle2, Lock } from "lucide-react";
+import { verifyOtpAction } from "@/actions";
 
 interface TwoFAPageProps {
   onBack: () => void;
@@ -46,7 +47,7 @@ export default function TwoFAPage({ onBack, onVerify }: TwoFAPageProps) {
     }
   };
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     const fullCode = codes.join("");
 
     if (fullCode.length !== 6) {
@@ -54,21 +55,31 @@ export default function TwoFAPage({ onBack, onVerify }: TwoFAPageProps) {
       return;
     }
 
-    const storedOtp = localStorage.getItem("otp");
-    if (fullCode !== storedOtp) {
-      setError("Invalid code. Please try again.");
+    const identifier = localStorage.getItem("identifier");
+    if (!identifier) {
+      setError("Session expired. Please log in again.");
       return;
     }
 
-    // OTP is correct
-    setError("");
-    setIsVerified(true);
+    try {
+      const res = await verifyOtpAction({ email: identifier, otp: fullCode });
+      
+      if (!res.success) {
+        setError(res.message || "Invalid code. Please try again.");
+        return;
+      }
 
-    setTimeout(() => {
-      // Clear OTP from localStorage
-      localStorage.removeItem("otp");
-      onVerify();
-    }, 1000);
+      // OTP is correct
+      setError("");
+      setIsVerified(true);
+
+      setTimeout(() => {
+        onVerify();
+      }, 1000);
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong during verification.");
+    }
   };
 
   if (isVerified) {

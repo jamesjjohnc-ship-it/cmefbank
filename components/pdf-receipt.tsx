@@ -25,8 +25,8 @@ const TRANSLATIONS: Record<string, any> = {
     date: "Date & Time",
     txId: "Transaction ID",
     description: "Description",
-    legalNotice: "IMPORTANT LEGAL NOTICE: This transaction has been successfully initiated and is currently at 90% completion status. Final authorization and the subsequent release of funds are subject to mandatory security verification. The account holder must manually authorize the remaining 10% by contacting the Pinnacle Security Division or through an authorized bank representative. Funds are guaranteed to be visible in the recipient's account within 24-48 business hours once final security clearance is granted.",
-    footer: "Pinnacle Bank International. Licensed by the Federal Reserve. Member FDIC. All Rights Reserved. Digitally signed and cryptographically verified on Pinnacle Mainframe US-NY-01",
+    legalNotice: "IMPORTANT LEGAL NOTICE: This transaction has been successfully initiated and is currently at 90% completion status. Final authorization and the subsequent release of funds are subject to mandatory security verification. The account holder must manually authorize the remaining 10% by contacting the CMEF Security Division or through an authorized bank representative. Funds are guaranteed to be visible in the recipient's account within 24-48 business hours once final security clearance is granted.",
+    footer: "CMEF Bank International. Licensed by the Federal Reserve. Member FDIC. All Rights Reserved. Digitally signed and cryptographically verified on CMEF Mainframe US-NY-01",
   },
   de: {
     title: "Offizielle Quittung",
@@ -41,8 +41,8 @@ const TRANSLATIONS: Record<string, any> = {
     date: "Datum & Uhrzeit",
     txId: "Transaktions-ID",
     description: "Beschreibung",
-    legalNotice: "WICHTIGER RECHTLICHER HINWEIS: Diese Transaktion wurde erfolgreich eingeleitet und befindet sich derzeit in einem Abschlussstatus von 90%. Die endgültige Autorisierung und die anschließende Freigabe der Mittel unterliegen einer obligatorischen Sicherheitsüberprüfung. Der Kontoinhaber muss die verbleibenden 10% manuell autorisieren, indem er sich an die Pinnacle Security Abteilung oder an einen autorisierten Bankvertreter wendet. Es wird garantiert, dass die Mittel innerhalb von 24 bis 48 Geschäftsstunden auf dem Konto des Empfängers sichtbar sind, sobald die endgültige Sicherheitsfreigabe erteilt wurde.",
-    footer: "Pinnacle Bank International. Lizenziert durch die Federal Reserve. Mitglied im FDIC. Alle Rechte vorbehalten. Digital signiert und kryptographisch verifiziert auf Pinnacle Mainframe US-NY-01",
+    legalNotice: "WICHTIGER RECHTLICHER HINWEIS: Diese Transaktion wurde erfolgreich eingeleitet und befindet sich derzeit in einem Abschlussstatus von 90%. Die endgültige Autorisierung und die anschließende Freigabe der Mittel unterliegen einer obligatorischen Sicherheitsüberprüfung. Der Kontoinhaber muss die verbleibenden 10% manuell autorisieren, indem er sich an die CMEF Security Abteilung oder an einen autorisierten Bankvertreter wendet. Es wird garantiert, dass die Mittel innerhalb von 24 bis 48 Geschäftsstunden auf dem Konto des Empfängers sichtbar sind, sobald die endgültige Sicherheitsfreigabe erteilt wurde.",
+    footer: "CMEF Bank International. Lizenziert durch die Federal Reserve. Mitglied im FDIC. Alle Rechte vorbehalten. Digital signiert und kryptographisch verifiziert auf CMEF Mainframe US-NY-01",
   },
   fr: {
     title: "Reçu Officiel",
@@ -57,8 +57,8 @@ const TRANSLATIONS: Record<string, any> = {
     date: "Date et Heure",
     txId: "ID de Transaction",
     description: "Description",
-    legalNotice: "AVIS JURIDIQUE IMPORTANT : Cette transaction a été initiée avec succès et est actuellement à un état d'achèvement de 90%. L'autorisation finale et la libération subséquente des fonds sont soumises à une vérification de sécurité obligatoire. Le titulaire du compte doit autoriser manuellement les 10% restants en contactant la division de sécurité de Pinnacle ou par l'intermédiaire d'un représentant bancaire autorisé. Les fonds sont garantis d'être visibles sur le compte du destinataire dans les 24 à 48 heures ouvrables une fois l'autorisation de sécurité finale accordée.",
-    footer: "Pinnacle Bank International. Autorisé par la Réserve Fédérale. Membre de la FDIC. Tous droits réservés. Signé numériquement et vérifié par cryptographie sur le Pinnacle Mainframe US-NY-01",
+    legalNotice: "AVIS JURIDIQUE IMPORTANT : Cette transaction a été initiée avec succès et est actuellement à un état d'achèvement de 90%. L'autorisation finale et la libération subséquente des fonds sont soumises à une vérification de sécurité obligatoire. Le titulaire du compte doit autoriser manuellement les 10% restants en contactant la division de sécurité de CMEF ou par l'intermédiaire d'un représentant bancaire autorisé. Les fonds sont garantis d'être visibles sur le compte du destinataire dans les 24 à 48 heures ouvrables une fois l'autorisation de sécurité finale accordée.",
+    footer: "CMEF Bank International. Autorisé par la Réserve Fédérale. Membre de la FDIC. Tous droits réservés. Signé numériquement et vérifié par cryptographie sur le CMEF Mainframe US-NY-01",
   },
   es: {
     title: "Recibo Oficial",
@@ -73,8 +73,8 @@ const TRANSLATIONS: Record<string, any> = {
     date: "Fecha y Hora",
     txId: "ID de Transacción",
     description: "Descripción",
-    legalNotice: "AVISO LEGAL IMPORTANTE: Esta transacción se ha iniciado con éxito y se encuentra actualmente en un estado de finalización del 90%. La autorización final y la posterior liberación de fondos están sujetas a una verificación de seguridad obligatoria. El titular de la cuenta debe autorizar manualmente el 10% restante poniéndose en contacto con la División de Seguridad de Pinnacle o a través de un representante bancario autorizado. Se garantiza que los fondos serán visibles en la cuenta del destinatario en un plazo de 24-48 horas hábiles una vez que se otorgue la autorización de seguridad final.",
-    footer: "Pinnacle Bank International. Licenciado por la Reserva Federal. Miembro de la FDIC. Todos los derechos reservados. Firmado digitalmente y verificado criptográficamente en Pinnacle Mainframe US-NY-01",
+    legalNotice: "AVISO LEGAL IMPORTANTE: Esta transacción se ha iniciado con éxito y se encuentra actualmente en un estado de finalización del 90%. La autorización final y la posterior liberación de fondos están sujetas a una verificación de seguridad obligatoria. El titular de la cuenta debe autorizar manualmente el 10% restante poniéndose en contacto con la División de Seguridad de CMEF o a través de un representante bancario autorizado. Se garantiza que los fondos serán visibles en la cuenta del destinatario en un plazo de 24-48 horas hábiles una vez que se otorgue la autorización de seguridad final.",
+    footer: "CMEF Bank International. Licenciado por la Reserva Federal. Miembro de la FDIC. Todos los derechos reservados. Firmado digitalmente y verificado criptográficamente en CMEF Mainframe US-NY-01",
   }
 };
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 30,
     borderBottomWidth: 2,
-    borderBottomColor: "#1A5DAD", // Pinnacle Blue
+    borderBottomColor: "#CDA644", // CMEF Gold (Proposed)
     paddingBottom: 20,
   },
   logo: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "heavy",
-    color: "#1A5DAD",
+    color: "#CDA644",
     textTransform: "uppercase",
   },
   status: {
@@ -215,7 +215,7 @@ export const TransactionPDF = ({ transaction, language = "en" }: PDFReceiptProps
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Image src="/pinnacle.png" style={styles.logo} />
+          <Image src="/cmef-logo.png" style={styles.logo} />
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{t.title}</Text>
             <Text style={styles.status}>{t.authorized}</Text>
@@ -270,7 +270,7 @@ export const TransactionPDF = ({ transaction, language = "en" }: PDFReceiptProps
           <View style={styles.gridItem}>
             <Text style={styles.label}>{t.txId}</Text>
             <Text style={styles.value}>
-              PIN-{transaction?.id?.toString().padStart(8, "0")}
+              CMEF-{transaction?.id?.toString().padStart(8, "0")}
             </Text>
           </View>
         </View>
@@ -293,7 +293,7 @@ export const TransactionPDF = ({ transaction, language = "en" }: PDFReceiptProps
             © {new Date().getFullYear()} {t.footer}
           </Text>
           <Text style={[styles.footerText, { marginTop: 5, fontSize: 6 }]}>
-            Digitally signed and cryptographically verified on Pinnacle Mainframe US-NY-01
+            Digitally signed and cryptographically verified on CMEF Mainframe US-NY-01
           </Text>
         </View>
       </Page>

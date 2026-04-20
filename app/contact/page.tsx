@@ -10,13 +10,13 @@ const contactOptions = [
     title: "Call Us",
     description: "Our support team is available 24/7 for urgent matters and fraud reporting.",
     icon: Phone,
-    detail: "+1 (800) PINNACLE",
+    detail: "+1 (800) CMEF-BANK",
   },
   {
     title: "Email Support",
     description: "For non-urgent inquiries, send us an email and we'll reply within 24 hours.",
     icon: Mail,
-    detail: "support@pinnaclebank.com",
+    detail: "support@cmefgroup.com",
   },
   {
     title: "Visit a Branch",

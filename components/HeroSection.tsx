@@ -41,7 +41,6 @@ export default function HeroSection() {
         setUserData(userRes.user);
       }
 
-      localStorage.setItem("otp", res.otp!);
       localStorage.setItem("identifier", identifier);
       
       toast.success("Login successful! Redirecting to verification...");
@@ -59,54 +58,78 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[600px] lg:h-[700px] w-full overflow-hidden flex items-center">
+    <section className="relative min-h-[600px] lg:h-[800px] w-full overflow-hidden flex items-center bg-white border-b border-gray-100">
       {/* Background Layer */}
-      <div 
-        className="absolute inset-0 z-0 bg-gray-100" 
-        style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2000"
-          alt="Outdoor landscape"
+          src="/hero-traditional.png"
+          alt="Traditional bank architecture"
           fill
-          className="object-cover opacity-80"
+          className="object-cover opacity-20"
           priority
           sizes="100vw"
         />
         {/* Overlays for depth and readability */}
-        <div className="absolute inset-0 bg-black/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 w-full relative z-10 py-12 lg:py-0">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 w-full relative z-10 py-20 lg:py-0">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24">
           
-          {/* Right Side (Login) - First on Mobile */}
+          {/* Left Side (Promo) */}
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start order-2 lg:order-1">
+             <div className="py-6 sm:py-10 max-w-xl">
+                <div className="space-y-6 sm:space-y-8 animate-in slide-in-from-bottom-8 duration-1000 fade-in text-gray-900">
+                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 border border-red-100 text-red-700 text-xs sm:text-sm font-bold backdrop-blur-md">
+                     <span className="flex h-2 w-2 rounded-full bg-[#B91C1C]"></span>
+                     CMEF Institutional Private Banking
+                   </div>
+                   <h2 className="text-4xl sm:text-6xl font-black text-gray-900 leading-[1.1] tracking-tight">
+                     Tradition meets <br/>
+                     <span className="text-[#B91C1C]">lasting security.</span>
+                   </h2>
+                   <p className="text-gray-600 text-base sm:text-xl font-medium leading-relaxed max-w-md">
+                     Experience the legacy of institutional financial services. Bespoke banking solutions tailored for the traditional wealth builder.
+                   </p>
+                   
+                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                     <Button className="h-12 sm:h-14 px-8 bg-[#B91C1C] text-white text-sm sm:text-base font-bold uppercase tracking-wider hover:bg-black transition-all rounded-none shadow-lg shadow-red-900/10">
+                       Open an Account
+                     </Button>
+                     <Button variant="outline" className="h-12 sm:h-14 px-8 border-gray-200 bg-white text-gray-900 text-sm sm:text-base font-bold hover:bg-gray-50 transition-all rounded-none">
+                       Our Heritage
+                     </Button>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+          {/* Right Side (Login) */}
           <div className="w-full lg:w-[450px] order-1 lg:order-2">
-             <div className="bg-white/95 backdrop-blur-lg rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden border border-white/30">
-                <div className="bg-[#003366] p-6 sm:p-8 text-center">
-                   <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-widest flex items-center justify-center gap-3">
-                     <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-blue-300" />
-                     Banking
+             <div className="bg-white rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden border border-gray-100 relative">
+                {/* Accent bar */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-[#B91C1C]" />
+                
+                <div className="bg-gray-50/50 border-b border-gray-100 p-6 sm:p-8 text-center relative overflow-hidden">
+                   <h3 className="text-xl sm:text-2xl font-black text-gray-900 uppercase tracking-widest flex items-center justify-center gap-3 relative z-10">
+                     <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-[#B91C1C]" />
+                     Secure Access
                    </h3>
                 </div>
                 
-                <div className="p-6 sm:p-10">
-                   <form onSubmit={handleLogin} className="space-y-4 sm:space-y-6">
+                <div className="p-6 sm:p-10 relative">
+                   <form onSubmit={handleLogin} className="space-y-5 sm:space-y-6">
                       <div className="space-y-2">
-                         <Label htmlFor="account" className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#003366] ml-1">Account Number</Label>
+                         <Label htmlFor="account" className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Account Number</Label>
                          <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                                <User className="w-4 h-4 sm:w-5 sm:h-5" />
                             </span>
                             <Input 
                               id="account"
-                              placeholder="Account Number" 
-                              className="h-12 sm:h-14 pl-12 bg-gray-50/50 border-gray-100 rounded-xl focus:ring-2 focus:ring-[#003366] transition-all"
+                              placeholder="e.g. 0001234567" 
+                              className="h-12 sm:h-14 pl-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-none focus:ring-1 focus:ring-[#B91C1C] focus:border-[#B91C1C] transition-all"
                               value={identifier}
                               onChange={(e) => setIdentifier(e.target.value)}
                               disabled={isLoading}
@@ -115,7 +138,7 @@ export default function HeroSection() {
                       </div>
 
                       <div className="space-y-2">
-                         <Label htmlFor="pass" className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#003366] ml-1">Password</Label>
+                         <Label htmlFor="pass" className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Password</Label>
                          <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                                <Lock className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -123,8 +146,8 @@ export default function HeroSection() {
                             <Input 
                               id="pass"
                               type={showPassword ? "text" : "password"}
-                              placeholder="Password" 
-                              className="h-12 sm:h-14 pl-12 bg-gray-50/50 border-gray-100 rounded-xl focus:ring-2 focus:ring-[#003366] transition-all"
+                              placeholder="••••••••" 
+                              className="h-12 sm:h-14 pl-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 rounded-none focus:ring-1 focus:ring-[#B91C1C] focus:border-[#B91C1C] transition-all"
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                               disabled={isLoading}
@@ -140,55 +163,35 @@ export default function HeroSection() {
                       </div>
 
                       <div className="flex items-center space-x-2 pb-1 sm:pb-2">
-                        <Checkbox id="remember" className="border-gray-300 rounded-md data-[state=checked]:bg-[#003366] data-[state=checked]:border-[#003366]" />
+                        <Checkbox id="remember" className="border-gray-300 data-[state=checked]:bg-[#B91C1C] data-[state=checked]:border-[#B91C1C]" />
                         <label
                           htmlFor="remember"
-                          className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500"
+                          className="text-xs sm:text-sm font-medium leading-none text-gray-500 cursor-pointer"
                         >
-                          Remember me
+                          Keep me signed in
                         </label>
                       </div>
-
+ 
                       <Button 
                          type="submit" 
                          disabled={isLoading}
-                         className="w-full h-14 sm:h-16 bg-[#003366] text-white font-black uppercase tracking-[0.2em] shadow-xl hover:bg-black hover:translate-y-[-2px] active:translate-y-[1px] transition-all duration-300 rounded-none text-sm sm:text-base"
+                         className="w-full h-14 sm:h-16 bg-[#B91C1C] text-white font-black uppercase tracking-[0.1em] shadow-lg shadow-red-900/10 hover:bg-black hover:translate-y-[-2px] active:translate-y-[0px] transition-all duration-300 rounded-none text-sm sm:text-base mt-2"
                       >
-                         {isLoading ? "Signing in..." : "Sign In"}
+                         {isLoading ? "Authenticating..." : "Sign In"}
                       </Button>
+                      
+                      <div className="flex flex-col space-y-3 text-center pt-2">
+                         <a href="/reset" className="text-xs text-[#B91C1C] hover:underline transition-colors font-bold">Forgot your password?</a>
+                         <p className="text-xs text-gray-500">
+                           New to CMEF Bank?{" "}
+                           <a href="/register" className="text-[#B91C1C] hover:underline font-bold transition-colors">Open an Account</a>
+                         </p>
+                      </div>
                    </form>
                 </div>
              </div>
           </div>
 
-          {/* Left Side (Promo) - Below on Mobile */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start order-2 lg:order-1">
-             <div className="bg-white/90 backdrop-blur-md p-6 sm:p-12 rounded-2xl sm:rounded-3xl shadow-xl max-w-xl border border-white/20">
-                <div className="space-y-4 sm:space-y-6">
-                   <h2 className="text-2xl sm:text-5xl font-black text-[#003366] leading-tight tracking-tighter">
-                     Discover our new <br/>
-                     <span className="text-blue-600">8.2% mortgages</span>
-                   </h2>
-                   <p className="text-gray-600 text-sm sm:text-xl font-light leading-relaxed">
-                     Federally insured by the National Credit Union Administration.
-                   </p>
-                   
-                   <div className="relative h-32 sm:h-64 w-full my-4 sm:my-8 group overflow-hidden rounded-xl sm:rounded-2xl hidden xs:block">
-                      <Image
-                        src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800"
-                        alt="Teal Credit Card"
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                   </div>
-
-                   <Button className="rounded-none bg-[#003366] px-6 py-6 sm:px-10 sm:py-8 text-xs sm:text-sm font-bold uppercase tracking-widest text-white hover:bg-black transition-all flex items-center gap-3">
-                     Find out more
-                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                   </Button>
-                </div>
-             </div>
-          </div>
         </div>
       </div>
     </section>

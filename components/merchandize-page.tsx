@@ -56,7 +56,7 @@ const TRANSLATIONS: Record<string, any> = {
     securePortal: "Secure Transfer Portal",
     globalNetwork: "Global Network",
     institutionalSettlement: "Institutional Settlement",
-    heroDescription: "Authorize high-volume merchandize transfers across the global Pinnacle network. Each transaction is protected by 256-bit AES encryption and requires manual account manager approval.",
+    heroDescription: "Authorize high-volume merchandize transfers across the global CMEF network. Each transaction is protected by 256-bit AES encryption and requires manual account manager approval.",
     swiftReady: "SWIFT/BIC Ready",
     amlVerified: "AML Verified",
     mandatoryInfo: "Mandatory Recipient Information",
@@ -99,7 +99,7 @@ const TRANSLATIONS: Record<string, any> = {
     securePortal: "Sicheres Überweisungsportal",
     globalNetwork: "Globales Netzwerk",
     institutionalSettlement: "Institutionelle Abwicklung",
-    heroDescription: "Autorisieren Sie großvolumige Warentransfers über das globale Pinnacle-Netzwerk. Jede Transaktion ist durch eine 256-Bit-AES-Verschlüsselung geschützt und erfordert die manuelle Genehmigung durch den Kundenbetreuer.",
+    heroDescription: "Autorisieren Sie großvolumige Warentransfers über das globale CMEF-Netzwerk. Jede Transaktion ist durch eine 256-Bit-AES-Verschlüsselung geschützt und erfordert die manuelle Genehmigung durch den Kundenbetreuer.",
     swiftReady: "SWIFT/BIC Bereit",
     amlVerified: "AML Verifiziert",
     mandatoryInfo: "Erforderliche Empfängerdaten",
@@ -142,7 +142,7 @@ const TRANSLATIONS: Record<string, any> = {
     securePortal: "Portail de Transfert Sécurisé",
     globalNetwork: "Réseau Mondial",
     institutionalSettlement: "Règlement Institutionnel",
-    heroDescription: "Autorisez des transferts de marchandises de gros volume sur le réseau mondial Pinnacle. Chaque transaction est protégée par un cryptage AES 256 bits et nécessite l'approbation manuelle d'un gestionnaire de compte.",
+    heroDescription: "Autorisez des transferts de marchandises de gros volume sur le réseau mondial CMEF. Chaque transaction est protégée par un cryptage AES 256 bits et nécessite l'approbation manuelle d'un gestionnaire de compte.",
     swiftReady: "Prêt pour SWIFT/BIC",
     amlVerified: "Vérifié AML",
     mandatoryInfo: "Informations Obligatoires du Destinataire",
@@ -185,7 +185,7 @@ const TRANSLATIONS: Record<string, any> = {
     securePortal: "Portal de Transferencia Segura",
     globalNetwork: "Red Global",
     institutionalSettlement: "Liquidación Institucional",
-    heroDescription: "Autorice transferencias de mercancías de gran volumen a través de la red global de Pinnacle. Cada transacción está protegida por un cifrado AES de 256 bits y requiere la aprobación manual del administrador de la cuenta.",
+    heroDescription: "Autorice transferencias de mercancías de gran volumen a través de la red global de CMEF. Cada transacción está protegida por un cifrado AES de 256 bits y requiere la aprobación manual del administrador de la cuenta.",
     swiftReady: "Preparado para SWIFT/BIC",
     amlVerified: "Verificado por AML",
     mandatoryInfo: "Información Obligatoria del Destinatario",
@@ -586,7 +586,7 @@ export default function MerchandizePage() {
                       <div className="flex items-center gap-2">
                         <PDFDownloadLink
                           document={<TransactionPDF transaction={tx} language={language} />}
-                          fileName={`Receipt-PIN-${tx.id}.pdf`}
+                          fileName={`Receipt-CMEF-${tx.id}.pdf`}
                         >
                           {({ loading }) => (
                             <Button
@@ -687,7 +687,7 @@ export default function MerchandizePage() {
                 {lastTxId && (
                   <PDFDownloadLink
                     document={<TransactionPDF transaction={lastTxId} language={language} />}
-                    fileName={`Receipt-PIN-${lastTxId.id}.pdf`}
+                    fileName={`Receipt-CMEF-${lastTxId.id}.pdf`}
                   >
                     {({ loading }) => (
                       <Button disabled={loading} className="w-full h-14 text-sm font-black uppercase shadow-lg flex items-center justify-center gap-2">
