@@ -353,7 +353,7 @@ export default function SettingsPage({}: SettingsPageProps) {
 
             {/* Editable fields */}
             <div>
-              <Label className="mb-1">First Name *</Label>
+              <Label className="mb-1">Full Name *</Label>
               <Input
                 value={form.firstName}
                 onChange={(e) => handleChange("firstName", e.target.value)}
@@ -371,25 +371,27 @@ export default function SettingsPage({}: SettingsPageProps) {
             </div>
 
             {[
-              { field: "middleName", label: "Middle Name" },
-              { field: "phone", label: "Phone" },
-              { field: "email", label: "Email *" },
+              { field: "middleName", label: "Middle Name", readOnly: true },
+              { field: "phone", label: "Phone Number" },
+              { field: "email", label: "Email", readOnly: true },
               { field: "address", label: "Address" },
               { field: "city", label: "City" },
               { field: "state", label: "State" },
               { field: "country", label: "Country" },
-              { field: "gender", label: "Gender" },
-              { field: "occupation", label: "Occupation" },
+              { field: "gender", label: "Gender", readOnly: true },
+              { field: "occupation", label: "Occupation", readOnly: true },
               { field: "employerName", label: "Employer Name" },
-              { field: "maritalStatus", label: "Marital Status" },
-              { field: "ssn", label: "SSN" },
-            ].map(({ field, label }) => (
+              { field: "maritalStatus", label: "Marital Status", readOnly: true },
+              { field: "ssn", label: "SSN", readOnly: true },
+            ].map(({ field, label, readOnly }) => (
               <div key={field}>
                 <Label className="mb-1">{label}</Label>
                 <Input
                   value={(form as any)[field]}
                   onChange={(e) => handleChange(field, e.target.value)}
-                  disabled={saving}
+                  disabled={saving || readOnly}
+                  readOnly={readOnly}
+                  className={readOnly ? "bg-muted cursor-not-allowed" : ""}
                 />
               </div>
             ))}
@@ -405,15 +407,13 @@ export default function SettingsPage({}: SettingsPageProps) {
               />
             </div>
 
-            {/* Boolean toggle */}
-            <div className="flex items-center space-x-2">
+            {/* Boolean toggle - Read Only */}
+            <div className="flex items-center space-x-2 opacity-60">
               <input
                 type="checkbox"
                 checked={form.hasPaidTransferFee}
-                onChange={(e) =>
-                  handleChange("hasPaidTransferFee", e.target.checked)
-                }
-                disabled={saving}
+                readOnly
+                disabled
               />
               <Label>Has Paid Transfer Fee</Label>
             </div>

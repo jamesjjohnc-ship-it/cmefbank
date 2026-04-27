@@ -122,7 +122,7 @@ const recentTransactions = [
 
 export default function TransfersPage() {
   const { userData } = useAppContext();
-  const user = userData?.user;
+  const user = userData;
   const [recipients, setRecipients] = useState(initialRecipients);
   const [amount, setAmount] = useState("");
   const [selectedRecipient, setSelectedRecipient] = useState<any>({});

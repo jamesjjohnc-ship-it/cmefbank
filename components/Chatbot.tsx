@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { MessageCircle, X, Send, User, Bot, Mail, Phone, HelpCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -33,7 +34,11 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] flex flex-col items-end group">
+    <motion.div 
+      drag
+      dragMomentum={false}
+      className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-[100] flex flex-col items-end group cursor-grab active:cursor-grabbing"
+    >
       
       {/* Floating Satellites (Show on hover when chat is closed) */}
       {!isOpen && (
@@ -158,6 +163,6 @@ export default function Chatbot() {
            </button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

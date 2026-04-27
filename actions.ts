@@ -117,6 +117,7 @@ export async function registerAction(data: any) {
         password: hashedPassword,
         accountNumber,
         kycLevel: "Level 1",
+        accountType: "Checking",
         balance: 0,
         availableBalance: 0,
       }
@@ -261,11 +262,18 @@ export const getUserByEmail = getUserByIdentifier;
 
 export async function updateUserByEmail(email: string, updates: Partial<any>) {
   if (!email) throw new Error("Email is required");
-  const updatedUser = await prisma.user.update({
-    where: { email },
-    data: updates,
-  });
-  return updatedUser;
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { email },
+      data: updates,
+    });
+    return updatedUser;
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return null;
+    }
+    throw error;
+  }
 }
 
 export async function getPaymentInfo() {
