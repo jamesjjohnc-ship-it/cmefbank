@@ -186,9 +186,9 @@ export default function DashboardPage({
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl" />
             <CardContent className="pt-8 pb-8 relative z-10">
               <div className="flex items-start justify-between">
-                <div className="space-y-4">
+                <div className="space-y-8">
                   <div>
-                    <p className="text-blue-200 text-xs font-black uppercase tracking-[0.2em] mb-1">
+                    <p className="text-blue-200 text-xs font-black uppercase tracking-[0.2em] mb-2">
                       Total Ledger Balance
                     </p>
                     <div className="flex items-center gap-3">
@@ -206,9 +206,9 @@ export default function DashboardPage({
                     </div>
                   </div>
                   
-                  <div className="pt-4 border-t border-white/10">
-                     <p className="text-blue-300 text-[10px] font-black uppercase tracking-widest mb-1">Available Balance</p>
-                     <p className="text-2xl font-bold text-white">
+                  <div className="pt-6 border-t border-white/10 mt-2">
+                     <p className="text-blue-300 text-xs font-black uppercase tracking-widest mb-2">Available Balance</p>
+                     <p className="text-3xl font-bold text-white">
                         {showBalance ? `$${Number(availableBalance).toLocaleString(undefined, { minimumFractionDigits: 2 })}` : "••••••"}
                      </p>
                   </div>
@@ -221,31 +221,31 @@ export default function DashboardPage({
           </Card>
 
           <div className="space-y-6">
-             <Card className="bg-white border-0 shadow-lg group hover:translate-y-[-4px] transition-all">
+             <Card className="bg-white border-0 shadow-lg group hover:translate-y-[-4px] transition-all h-[150px] flex flex-col justify-center">
                 <CardContent className="p-6">
-                   <div className="flex items-center justify-between mb-4">
+                   <div className="flex items-center justify-between mb-6">
                       <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors">
                          <TrendingDown className="w-5 h-5 text-green-600" />
                       </div>
                       <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">This Month</span>
                    </div>
-                   <p className="text-slate-500 text-xs font-bold uppercase tracking-tight mb-1">Sent This Month</p>
-                   <h4 className="text-2xl font-black text-slate-900">
+                   <p className="text-slate-500 text-xs font-bold uppercase tracking-tight mb-2">Sent This Month</p>
+                   <h4 className="text-3xl font-black text-slate-900">
                       ${Number(sentThisMonth).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                    </h4>
                 </CardContent>
              </Card>
 
-             <Card className="bg-white border-0 shadow-lg group hover:translate-y-[-4px] transition-all">
+             <Card className="bg-white border-0 shadow-lg group hover:translate-y-[-4px] transition-all h-[150px] flex flex-col justify-center">
                 <CardContent className="p-6">
-                   <div className="flex items-center justify-between mb-4">
+                   <div className="flex items-center justify-between mb-6">
                       <div className="p-2 bg-amber-50 rounded-lg group-hover:bg-amber-100 transition-colors">
                          <RefreshCw className="w-5 h-5 text-amber-600 animate-spin-slow" />
                       </div>
                       <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Awaiting</span>
                    </div>
-                   <p className="text-slate-500 text-xs font-bold uppercase tracking-tight mb-1">Pending Transfer</p>
-                   <h4 className="text-2xl font-black text-slate-900">
+                   <p className="text-slate-500 text-xs font-bold uppercase tracking-tight mb-2">Pending Transfer</p>
+                   <h4 className="text-3xl font-black text-slate-900">
                       ${Number(pendingAmount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                    </h4>
                 </CardContent>

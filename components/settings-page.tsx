@@ -378,11 +378,11 @@ export default function SettingsPage({}: SettingsPageProps) {
               { field: "city", label: "City" },
               { field: "state", label: "State" },
               { field: "country", label: "Country" },
-              { field: "gender", label: "Gender", readOnly: true },
+              { field: "gender", label: "Gender" },
               { field: "occupation", label: "Occupation", readOnly: true },
               { field: "employerName", label: "Employer Name" },
               { field: "maritalStatus", label: "Marital Status", readOnly: true },
-              { field: "ssn", label: "SSN", readOnly: true },
+              { field: "ssn", label: "SSN" },
             ].map(({ field, label, readOnly }) => (
               <div key={field}>
                 <Label className="mb-1">{label}</Label>
