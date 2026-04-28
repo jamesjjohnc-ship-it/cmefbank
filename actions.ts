@@ -260,11 +260,23 @@ export async function getUserByIdentifier(identifier: string) {
 // Redirect old name to new name to avoid breaking legacy imports
 export const getUserByEmail = getUserByIdentifier;
 
-export async function updateUserByEmail(email: string, updates: Partial<any>) {
-  if (!email) throw new Error("Email is required");
+export async function updateUserByEmail(emailOrAccount: string, updates: Partial<any>) {
+  if (!emailOrAccount) throw new Error("Identifier is required");
+  
   try {
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: emailOrAccount.toLowerCase() },
+          { accountNumber: emailOrAccount }
+        ]
+      }
+    });
+
+    if (!user) return null;
+
     const updatedUser = await prisma.user.update({
-      where: { email },
+      where: { id: user.id },
       data: updates,
     });
     return updatedUser;
